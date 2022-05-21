@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  blurhash:
+    image: "blurhash"
+    restart: always
+    build:
+      context: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blurhash.rule=Host(`blurhash.mibdev.com`)"
+      - "traefik.http.routers.blurhash.tls.certresolver=mibdev"
+      - "traefik.http.routers.blurhash.entrypoints=websecure"
+      - "traefik.http.services.blurhash.loadbalancer.server.port=3000"
+
+networks:
+  default:
+    name: "proxy"
+    external: true
